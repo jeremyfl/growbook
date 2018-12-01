@@ -1,0 +1,38 @@
+@layout('template') 
+@section('content')
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+      <div class="card">
+            <h5 class="card-header">
+                Edit Penerbit {{ franchises.nama }}
+            </h5>
+            <div class="card-body">
+                <form method="POST" action="/franchise/{{ franchises.id }}?_method=PUT">
+                    <div class="form-group">
+                        <label>Nama</label>
+                        <input name="nama" value="{{ franchises.nama }}" type="text" class="form-control" placeholder="Masukan Nama Penerbit">
+                    </div>
+                    <div class="form-group">
+                        <label>Alamat</label>
+                        <input name="alamat" value="{{ franchises.alamat }}" type="text" class="form-control" placeholder="Masukan Alamat Penerbit">
+                    </div>
+                    <div class="form-group">
+                        <label>Kota</label>
+                        <input name="kota" value="{{ franchises.kota }}" type="text" class="form-control" placeholder="Masukan Kota Penerbit">
+                    </div>
+                    <div class="form-group">
+                        <label>Telepon</label>
+                        <input name="telepon" value="{{ franchises.telepon }}" type="number" class="form-control" placeholder="Masukan Telepon Penerbit">
+                    </div>
+                    <div class="form-group">
+                        <label>Masa Berlaku</label>
+                        <input name="masa_berlaku" value="{{ franchises.masa_berlaku }}" type="text" class="form-control" placeholder="Masukan Telepon Penerbit">
+                    </div>
+                    {{ csrfField() }}
+                    <button type="submit" class="btn btn-primary">Edit Buku</button>
+                </form>
+            </div>
+      </div>
+  </div>
+</div>
+@endsection

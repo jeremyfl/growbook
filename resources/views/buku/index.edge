@@ -1,0 +1,213 @@
+@layout('template') 
+@section('content')
+
+<!-- Tambah Buku Modal -->
+<div class="modal fade" id="tambah-buku" tabindex="-1" role="dialog" aria-labelledby="tambah-buku" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Buku</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form method="POST" action="/buku">
+        <div class="modal-body">
+                <div class="form-group">
+                    <label>Judul</label>
+                    <input name="nama" type="text" class="form-control" placeholder="Masukan Judul Buku">
+                </div>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select name="kategori_buku_id" class="form-control">
+                        @each(kategori in kategoris)
+                            <option value="{{ kategori.id }}">{{ kategori.nama }}</option>
+                        @endeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Harga</label>
+                    <input name="harga" type="number" class="form-control" placeholder="Masukan Harga Buku">
+                </div>
+                <div class="form-group">
+                    <label>Stok</label>
+                    <input name="stok" type="number" class="form-control" placeholder="Masukan Stok Buku">
+                </div>
+                <div class="form-group">
+                    <label>Penerbit</label>
+                    <select name="penerbit_id" class="form-control">
+                            @each(penerbit in penerbits)
+                                <option value="{{ penerbit.id }}">{{ penerbit.nama }}</option>
+                            @endeach
+                    </select>
+                </div>
+
+                {{ csrfField() }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Tambah Buku</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- Tambah Kategori Modal -->
+<div class="modal fade" id="tambah-kategori-buku" tabindex="-1" role="dialog" aria-labelledby="tambah-kategori-buku" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori Buku</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form method="POST" action="/kategori/buku">
+        <div class="modal-body">
+                <div class="form-group">
+                    <label>Judul</label>
+                    <input name="nama" type="text" class="form-control" placeholder="Masukan Judul Buku">
+                </div>
+                
+                {{ csrfField() }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Tambah Buku</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- Search Buku -->
+<div class="modal fade" id="cari-buku" tabindex="-1" role="dialog" aria-labelledby="cari-buku" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cari Buku</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form method="GET" action="/buku">
+        <div class="modal-body">
+                <div class="form-group">
+                    <input name="keyword" type="text" class="form-control" placeholder="Masukan Keyword">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Cari Buku</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- Search Buku -->
+<div class="modal fade" id="order-buku" tabindex="-1" role="dialog" aria-labelledby="order-buku" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Order Buku</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form method="POST" action="/order/buku">
+        <div class="modal-body">
+                <div class="form-group">
+                    <label for="">Jumlah Stok</label>
+                    <input name="jumlah" type="text" class="form-control" placeholder="Masukan Jumlah Buku yang mau di order">
+                    <input type="hidden" id="id_buku_input" name="buku_id">
+                    {{ csrfField() }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Order Buku</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <h3>Data Buku 
+        <small>Pengadaan Buku</small>
+    </h3>
+      <div class="card">
+            <h5 class="card-header">
+                <div class="float-right">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#cari-buku">
+                        <i class="fas fa-search"></i>
+                        Cari Buku
+                    </button>
+                @if(auth.user.type === "admin")
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#tambah-kategori-buku">
+                        <i class="fas fa-tags"></i>
+                        Tambah Kategori Buku
+                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambah-buku">
+                        <i class="fas fa-plus"></i>
+                        Tambah Buku
+                    </button>
+                @endif
+                </div>
+            </h5>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Harga</th>
+                <th scope="col">Stok</th>
+                <th scope="col">Penerbit</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(buku in bukus)
+                    <tr>
+                        <th scope="row">K100{{ buku.id }}</th>
+                        <td>{{ buku.nama }}</td>
+                        <td>{{ buku.kategori.nama }}</td>
+                        <td>{{ buku.harga }}</td>
+                        <td>{{ buku.stok }}</td>
+                        <td>{{ buku.penerbit.nama }}</td>
+                        <td>
+                           @loggedIn
+                                @if(auth.user.type === "admin")
+                                    <div class="btn-group">
+                                        <a href="{{ url }}/{{ buku.id }}/edit" class="btn btn-warning">
+                                            <i class="far fa-edit"></i>
+                                        </a>
+                                        <form action="{{ 'buku/' + buku.id + '?_method=DELETE' }}" method="POST">
+                                            {{ csrfField() }}
+                                            <button type="submit" class="btn btn-danger">
+                                                    <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                        
+                                    </div>
+                                @elseif(auth.user.type === "franchise")
+                                    <button type="button" id="button-buku" class="btn btn-success" data-toggle="modal" data-target="#order-buku" value="{{ buku.id }}">
+                                        Order <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                @endif  
+                           @else
+                                {{--  Not logged in clear td  --}}
+                           @endloggedIn
+                        </td>
+                    </tr>    
+                    @endeach
+            </tbody>
+            </table> 
+      </div>
+  </div>
+</div>
+@endsection

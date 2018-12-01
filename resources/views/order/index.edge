@@ -1,0 +1,37 @@
+@layout('template') 
+@section('content')
+
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <h3>
+        Franchise Order
+    </h3>
+      <div class="card">
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Judul Buku</th>
+                <th scope="col">Stok Buku</th>
+                <th scope="col">Nama Franchise</th>
+                <th scope="col">Alamat Franchise</th>
+                <th scope="col">Kota Franchise</th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(order in orders)
+                    <tr>
+                        <th scope="row">{{ order.id }}</th>
+                        <td>{{ order.buku.nama }}</td>
+                        <td>{{ order.buku.stok }}</td>
+                        <td>{{ order.user.franchise.nama }}</td>
+                        <td>{{ order.user.franchise.alamat }}</td>
+                        <td>{{ order.user.franchise.kota }}</td>
+                    </tr>    
+                    @endeach
+            </tbody>
+            </table> 
+      </div>
+  </div>
+</div>
+@endsection

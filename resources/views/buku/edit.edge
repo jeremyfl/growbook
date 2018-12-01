@@ -1,0 +1,48 @@
+@layout('template') 
+@section('content')
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+      <div class="card">
+            <h5 class="card-header">
+                Edit Buku {{ bukus.nama }}
+            </h5>
+            <div class="card-body">
+                <form method="POST" action="/buku/{{ bukus.id }}?_method=PUT">
+                    <div class="form-group">
+                            <label>Judul</label>
+                            <input value="{{ bukus.nama }}" name="nama" type="text" class="form-control" placeholder="Masukan Judul Buku">
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <select name="kategori_buku_id" class="form-control">
+                                @each(kategori in kategoris)
+                                    <option value="{{ kategori.id }}">{{ kategori.nama }}</option>
+                                @endeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Harga</label>
+                            <input value="{{ bukus.harga }}" name="harga" type="number" class="form-control" placeholder="Masukan Harga Buku">
+                        </div>
+                        <div class="form-group">
+                            <label>Stok</label>
+                            <input value="{{ bukus.stok }}" name="stok" type="number" class="form-control" placeholder="Masukan Stok Buku">
+                        </div>
+                        <div class="form-group">
+                            <label>Penerbit</label>
+                            <select name="penerbit_id" class="form-control">
+                                    @each(penerbit in penerbits)
+                                        <option value="{{ penerbit.id }}">{{ penerbit.nama }}</option>
+                                    @endeach
+                            </select>
+                        </div>
+
+                        {{ csrfField() }}
+
+                    <button type="submit" class="btn btn-primary">Edit Buku</button>
+                </form>
+            </div>
+      </div>
+  </div>
+</div>
+@endsection

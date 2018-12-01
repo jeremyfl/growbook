@@ -1,0 +1,51 @@
+@layout('template') 
+@section('content')
+
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+      <h3>
+        Data Franchise
+      </h3>
+      <div class="card">
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Alamat</th>
+                <th scope="col">Kota</th>
+                <th scope="col">Telepon</th>
+                <th scope="col">Masa Berlaku</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(franchises in franchises)
+                    <tr>
+                        <th scope="row">F00{{ franchises.id }}</th>
+                        <td>{{ franchises.nama }}</td>
+                        <td>{{ franchises.alamat }}</td>
+                        <td>{{ franchises.kota }}</td>
+                        <td>{{ franchises.telepon }}</td>
+                        <td>{{ franchises.masa_berlaku }}</td>
+                        <td>
+                            <div class="btn-group">
+                            <a href="{{ url }}/{{ franchises.id }}/edit" class="btn btn-warning">
+                                <i class="far fa-edit"></i>
+                            </a>
+                            <form action="{{ 'franchises/' + franchises.id + '?_method=DELETE' }}" method="POST">
+                                {{ csrfField() }}
+                                <button type="submit" class="btn btn-danger">
+                                        <i class="far fa-trash-alt"></i>
+                                </button>
+                            </form>
+                            </div>
+                        </td>
+                    </tr>    
+                    @endeach
+            </tbody>
+            </table> 
+      </div>
+  </div>
+</div>
+@endsection

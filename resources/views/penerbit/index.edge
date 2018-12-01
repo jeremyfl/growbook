@@ -1,0 +1,97 @@
+@layout('template') 
+@section('content')
+
+<!-- Tambah Penerbit Modal -->
+<div class="modal fade" id="tambah-penerbit" tabindex="-1" role="dialog" aria-labelledby="tambah-penerbit" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Penerbit</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    <form method="POST" action="/penerbit">
+        <div class="modal-body">
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input name="nama" type="text" class="form-control" placeholder="Masukan Nama Penerbit">
+                </div>
+                <div class="form-group">
+                    <label>Alamat</label>
+                    <input name="alamat" type="text" class="form-control" placeholder="Masukan Alamat Penerbit">
+                </div>
+                <div class="form-group">
+                    <label>Kota</label>
+                    <input name="kota" type="text" class="form-control" placeholder="Masukan Kota Penerbit">
+                </div>
+                <div class="form-group">
+                    <label>Telepon</label>
+                    <input name="telepon" type="number" class="form-control" placeholder="Masukan Telepon Penerbit">
+                </div>
+
+                {{ csrfField() }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Tambah Penerbit</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+      <h3>Data Penerbit</h3>
+      <div class="card">
+            <h5 class="card-header">
+                <div class="float-right">
+                    @if(auth.user.type === "admin")
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambah-penerbit">
+                            <i class="fas fa-pen"></i>
+                            Tambah Penerbit
+                        </button>
+                    @endif
+                </div>
+            </h5>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Alamat</th>
+                <th scope="col">Kota</th>
+                <th scope="col">Telepon</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(penerbit in penerbits)
+                    <tr>
+                        <th scope="row">SP0{{ penerbit.id }}</th>
+                        <td>{{ penerbit.nama }}</td>
+                        <td>{{ penerbit.alamat }}</td>
+                        <td>{{ penerbit.kota }}</td>
+                        <td>{{ penerbit.telepon }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{{ url }}/{{ penerbit.id }}/edit" class="btn btn-warning">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                                <form action="{{ 'penerbit/' + penerbit.id + '?_method=DELETE' }}" method="POST">
+                                    {{ csrfField() }}
+                                    <button type="submit" class="btn btn-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>    
+                    @endeach
+            </tbody>
+            </table> 
+      </div>
+  </div>
+</div>
+@endsection
