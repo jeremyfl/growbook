@@ -1,26 +1,12 @@
-# Adonis fullstack application
+# Growbook
 
-This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
+MVC Application with Fullstack JavaScript in server-side. I choose MVC due to time limitation by exam comitee
 
-1. Bodyparser
-2. Session
-3. Authentication
-4. Web security middleware
-5. CORS
-6. Edge template engine
-7. Lucid ORM
-8. Migrations and seeds
+## What for
+Certification exam purpose of 1 week training by Kementrian Perindustrian
 
 ## Setup
-
-Use the adonis command to install the blueprint
-
-```bash
-adonis new yardstick
-```
-
-or manually clone the repo and then run `npm install`.
-
+Manually clone the repo and then run `npm install`.
 
 ### Migrations
 
